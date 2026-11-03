@@ -1,0 +1,7 @@
+__pycache__/
+*.pid
+*.log
+*.elf
+display_state.json
+button_events.jsonl
+message_ack.jsonl

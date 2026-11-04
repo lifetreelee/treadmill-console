@@ -8,7 +8,7 @@ BYTES = {1: [0, 1, 2], 2: [0, 1, 2], 3: [1, 2, 4, 5], 4: [1, 2, 4, 5], 5: [0, 1,
 BIT   = {'dp': 0, 'g': 1, 'f': 2, 'e': 3, 'd': 4, 'c': 5, 'b': 6, 'a': 7}
 GLYPH = {'0': 'abcdef', '1': 'bc', '2': 'abged', '3': 'abgcd', '4': 'fgbc', '5': 'afgcd', '6': 'afgedc', '7': 'abc',
          '8': 'abcdefg', '9': 'abcdfg', '-': 'g', ' ': '', '_': 'd', 'E': 'afged', 'F': 'afge', 'C': 'afed', 'H': 'fgebc',
-         'L': 'fed', 'P': 'abfge', 'o': 'gecd', 'r': 'ge', 'n': 'gec', 'u': 'edc', 'A': 'abcefg', 'b': 'fgecd', 'd': 'bcdeg'}
+         'L': 'fed', 'P': 'abfge', 'o': 'gecd', 'r': 'ge', 'n': 'gec', 'u': 'edc', 'U': 'bcdef', 'A': 'abcefg', 'b': 'fgecd', 'd': 'bcdeg'}
 def lit(group, text, dots=()):
     """Set of (row, j) lit for a group showing `text` (one char per digit, right-aligned if shorter);
     `dots` = digit indices (0 = leftmost) whose own decimal point is lit."""

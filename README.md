@@ -10,6 +10,10 @@ scrolling messages that stay until a person presses a button.
 
 <img src="photos/smiley_correct.jpg" width="320" alt="the smiley on the 20x8 red/green matrix">
 
+<img src="photos/cover_claude.jpg" width="640" alt="the board running its own cover design: a starburst on the matrix and CLAUdE on the digits">
+
+*The board showing its own cover design: a starburst on the matrix and the digit groups spelling CLAudE.*
+
 ## Which board is this? (identification, in case you are searching for it)
 
 - Maker: **Digital Concepts**; the board dates to **2006** (ATmega64 date code `0619B`, capacitor codes `0611`/`0630`).

@@ -30,7 +30,7 @@ def px(s,x,y,color,on):
     r=7-y; op='p' if on else 'q'
     if color in ('r','y'): cmd(s,'%s %d %d'%(op,r,23-x))
     if color in ('g','y'): cmd(s,'%s %d %d'%(op,r,47-x))
-cur_dig=set(); RB=[]; PHASE=True; RS=[]; PHASE2=True; MSG=None
+cur_dig=set(); RB=[]; PHASE=True; RS=[]; PHASE2=True; MSG=None; LREQ=30; CURL=30   # LREQ: row on-time (brightness) wanted, state key 'L'
 def draw_digits(s,dg,dots,raw=()):
     """Update only the digit/bar/LED segments that changed."""
     global cur_dig
@@ -43,9 +43,9 @@ def draw_digits(s,dg,dots,raw=()):
     for r,j in cur_dig-new: cmd(s,'q %d %d'%(r,j))
     cur_dig=new
 def load():
-    global RB,RS,MSG
+    global RB,RS,MSG,LREQ
     try:
-        d=json.load(open(STATE)); RB=d.get('raw_blink',[]); RS=d.get('raw_slow',[]); MSG=d.get('message')
+        d=json.load(open(STATE)); RB=d.get('raw_blink',[]); RS=d.get('raw_slow',[]); MSG=d.get('message'); LREQ=int(d.get('L',30))
         return d.get('art',SMILE),d.get('color','y'),d.get('blink',EYES),d.get('digits',{}),d.get('dots',{}),d.get('raw',[])
     except Exception: return SMILE,'y',EYES,{},{},[]
 def append(path,obj):
@@ -64,7 +64,7 @@ def stop(*_):
 signal.signal(signal.SIGTERM,stop); signal.signal(signal.SIGINT,stop)
 open(os.path.join(HERE,'blinky.pid'),'w').write(str(os.getpid()))
 s=serial.Serial('/dev/ttyUSB0',115200,timeout=0.3); time.sleep(3.0); s.reset_input_buffer()
-cmd(s,'L 120'); cmd(s,'X')
+cmd(s,'L 30'); cmd(s,'X')
 mt=-1; art,color,blink,dg,dots,raw=load(); paint(s,art,color); draw_digits(s,dg,dots,raw); log('started')
 done=read_done(); active=None; cols=[]; pos=0; loops=0; mnext=0; speed=9.0
 prev_poll=0; held=0
@@ -83,6 +83,7 @@ while running:
         if m!=mt:
             mt=m; old=(art,color); art,color,blink,dg,dots,raw=load()
             if (art,color)!=old and not active: paint(s,art,color); log('redraw')
+            if LREQ!=CURL: cmd(s,'L %d'%LREQ); CURL=LREQ; log('row on-time L=%d'%LREQ)
             draw_digits(s,dg,dots,raw); nxt=time.time()+random.uniform(3,7)
         now=time.time()
         # buttons: a press = the same bit set in two consecutive polls; edges are logged, any press ends a message

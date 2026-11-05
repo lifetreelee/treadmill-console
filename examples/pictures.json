@@ -1,0 +1,274 @@
+{
+ "about": "20x8 pictures for the treadmill console matrix. In 'art', '#' = the picture colour, R/G/Y = red/green/orange for that pixel, anything else is off. 'digits' (optional) are text for the six digit groups while the picture is up. Show one with: python3 examples/show_picture.py NAME",
+ "pictures": [
+  {
+   "name": "smiley",
+   "title": "Smiley",
+   "caption": "the default face (the eyes blink)",
+   "color": "y",
+   "art": [
+    "....................",
+    "......##....##......",
+    "......##....##......",
+    "....................",
+    "...#..............#.",
+    "....#............#..",
+    ".....##........##...",
+    ".......########....."
+   ]
+  },
+  {
+   "name": "starburst",
+   "title": "Starburst",
+   "caption": "the cover design",
+   "color": "y",
+   "art": [
+    "......#..##..#......",
+    ".......#.##.#.......",
+    "........####........",
+    "......########......",
+    "......########......",
+    "........####........",
+    ".......#.##.#.......",
+    "......#..##..#......"
+   ],
+   "digits": {
+    "1": "CLA",
+    "2": "UdE"
+   }
+  },
+  {
+   "name": "cat",
+   "title": "Cat",
+   "caption": "a plain cat face",
+   "color": "y",
+   "art": [
+    "....#..........#....",
+    "....##........##....",
+    "....############....",
+    "....#..##..##..#....",
+    "....#..##..##..#....",
+    "....#....##....#....",
+    "..###.#......#.###..",
+    "....############...."
+   ],
+   "digits": {
+    "3": "Purr"
+   }
+  },
+  {
+   "name": "moon-stars",
+   "title": "Moon and stars",
+   "caption": "good night",
+   "color": "y",
+   "art": [
+    "....####..#.........",
+    "...###......#.....#.",
+    "..###......###......",
+    "..###...#...#.......",
+    "..###...........#...",
+    "..###....#.....###..",
+    "...###..........#...",
+    "....####............"
+   ],
+   "digits": {
+    "3": "good",
+    "4": "nite"
+   }
+  },
+  {
+   "name": "owl",
+   "title": "Owl",
+   "caption": "an owl",
+   "color": "y",
+   "art": [
+    "....##........##....",
+    "....############....",
+    "....#.###..###.#....",
+    "....#.#.#..#.#.#....",
+    "....#.###..###.#....",
+    "....#....##....#....",
+    "....#..........#....",
+    "....############...."
+   ],
+   "digits": {
+    "3": "hoot"
+   }
+  },
+  {
+   "name": "tiger-asleep",
+   "title": "Tiger, asleep",
+   "caption": "a long-haired calico, eyes shut",
+   "color": "y",
+   "art": [
+    "................#...",
+    "..............###...",
+    "..#..#.........#....",
+    "..####.........###..",
+    ".#########..........",
+    "#############.......",
+    "#############.......",
+    ".###########........"
+   ]
+  },
+  {
+   "name": "tiger",
+   "title": "Tiger",
+   "caption": "a long-haired calico",
+   "color": "y",
+   "art": [
+    "....RR........RR....",
+    "....RRR......RRR....",
+    "....R..GG..GG..R....",
+    "....RRR..YY....R....",
+    "....RRRRYYYY...R....",
+    "....RYYYYRRYYYYR....",
+    "....RYYYYYYYYYYR....",
+    ".....RRRRRRRRRR....."
+   ],
+   "digits": {
+    "1": "tiG",
+    "2": "Er"
+   }
+  },
+  {
+   "name": "milo",
+   "title": "Milo",
+   "caption": "black with a white spot on the chin",
+   "color": "y",
+   "art": [
+    "....................",
+    "....................",
+    "......GG....GG......",
+    "......GG....GG......",
+    "....................",
+    ".........YY.........",
+    "....................",
+    "...................."
+   ]
+  },
+  {
+   "name": "bogey",
+   "title": "Bogey",
+   "caption": "ginger and long-haired with a white chest",
+   "color": "y",
+   "art": [
+    "...RR..........RR...",
+    "...RRRR......RRRR...",
+    "...R..GG....GG..R...",
+    "...R..GG....GG..R...",
+    "...R.....RR.....R...",
+    "..RRYYYYYYYYYYYYRR..",
+    "..RYYYYYYYYYYYYYYR..",
+    "...RRRRRRRRRRRRRR..."
+   ],
+   "digits": {
+    "1": "bog",
+    "2": "ey"
+   }
+  },
+  {
+   "name": "jack",
+   "title": "Jack",
+   "caption": "a tuxedo cat",
+   "color": "y",
+   "art": [
+    "...R............R...",
+    "...RR..........RR...",
+    "......GG.YY.GG......",
+    "......GG.YY.GG......",
+    ".........YY.........",
+    "..YYY...YRRY...YYY..",
+    ".......YYYYYY.......",
+    "......YYYYYYYY......"
+   ]
+  },
+  {
+   "name": "sunrise-pines",
+   "title": "Sunrise between the pines",
+   "caption": "a morning picture: red rays, an orange sun, green pines",
+   "color": "y",
+   "art": [
+    "....R....RR....R....",
+    "......R.YYYY.R......",
+    ".....R.YYYYYY.R.....",
+    "......YYYYYYYY......",
+    "..G...YYYYYYYY...G..",
+    ".GGG.GGGYYYYYY.GG.GG",
+    "GGGGGGG.YYYYYY.GGGGG",
+    "GGGGGGGGGGGGGGGGGGGG"
+   ],
+   "digits": {
+    "3": "good",
+    "4": "day"
+   }
+  },
+  {
+   "name": "dolly",
+   "title": "Dolly",
+   "caption": "ginger and cream, sitting up and looking at the ceiling",
+   "color": "y",
+   "art": [
+    ".....Y........Y.....",
+    ".....YY......YY.....",
+    ".....YYYYYYYYYY.....",
+    ".....YGGYYYYGGY.....",
+    ".....YYYYRRYYYY.....",
+    "......YYYYYYYY......",
+    ".YY..YYYYYYYYYY.....",
+    "YY...YYYYYYYYYYY...."
+   ],
+   "digits": {
+    "1": "dol",
+    "2": "ly"
+   }
+  },
+  {
+   "name": "agatha",
+   "title": "Agatha",
+   "caption": "a tortoiseshell with a split face (black on one side, orange on the other)",
+   "color": "y",
+   "art": [
+    "....R..........Y....",
+    "....RR........YY....",
+    ".....RRRRRYYYYY.....",
+    ".....R.GG..YGGY.....",
+    ".....R...RRYYYY.....",
+    ".....R....YYYYY.....",
+    "......R..YYYYYY.....",
+    "....RRRRRYYYYYYY...."
+   ],
+   "digits": {
+    "1": "aga",
+    "2": "tha"
+   }
+  },
+  {
+   "name": "crystal-celebration",
+   "title": "Crystal celebration",
+   "caption": "the still frame of examples/celebrate.py: the oscillating wave and sparks",
+   "color": "y",
+   "art": [
+    ".R......Y......Y...Y",
+    "R...Y.....Y.R.....Y.",
+    "..R..GY..Y..GR...Y.G",
+    "....G.G....GG.....G.",
+    "G...G..G......G...G.",
+    "G..G......G...G..G..",
+    ".GG.....GGG....GG...",
+    ".YG.Y...GY...Y..GY.."
+   ],
+   "digits": {
+    "1": " 13",
+    "2": "824",
+    "3": "good",
+    "4": " Job"
+   },
+   "dots": {
+    "1": [
+     2
+    ]
+   }
+  }
+ ]
+}

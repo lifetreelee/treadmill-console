@@ -21,31 +21,46 @@ def log(m):
     with open(LOG,'a') as f: f.write(time.strftime('%F %T ')+m+'\n')
 def cmd(s,c): s.write((c+'\n').encode()); return s.read_until(b'\n').decode(errors='ignore').strip()
 def zframe(red,green): return 'Z'+''.join('%02x'%m for m in red)+''.join('%02x'%m for m in green)
+def pixcolor(ch,color):
+    """colour of one art character: '#' = the picture colour, R/G/Y = red/green/orange (both LEDs), anything else = off"""
+    return color if ch=='#' else {'R':'r','G':'g','Y':'y'}.get(ch)
 def art_masks(art,color):
-    cols=[sum(1<<y for y in range(8) if art[y][x]=='#') for x in range(20)]
-    return (cols if color in ('r','y') else [0]*20),(cols if color in ('g','y') else [0]*20)
+    red=[0]*20; green=[0]*20
+    for x in range(20):
+        for y in range(8):
+            c=pixcolor(art[y][x],color)
+            if c in ('r','y'): red[x]|=1<<y
+            if c in ('g','y'): green[x]|=1<<y
+    return red,green
 def paint(s,art,color): cmd(s,zframe(*art_masks(art,color)))
 def px(s,x,y,color,on):
     """single matrix pixel (red j = 23 - x, green j = 47 - x, row = 7 - y)"""
     r=7-y; op='p' if on else 'q'
     if color in ('r','y'): cmd(s,'%s %d %d'%(op,r,23-x))
     if color in ('g','y'): cmd(s,'%s %d %d'%(op,r,47-x))
-cur_dig=set(); RB=[]; PHASE=True; RS=[]; PHASE2=True; MSG=None; LREQ=30; CURL=30   # LREQ: row on-time (brightness) wanted, state key 'L'
+cur_dig=set(); RB=[]; PHASE=True; RS=[]; PHASE2=True; MSG=None; LREQ=30; CURL=30; OV=None; OVACT=False   # OV: temporary overlay {'digits':{group:text},'dots':{},'raw':[[row,j]..],'until':epoch} shown over the live data; LREQ: row on-time (brightness) wanted, state key 'L'
 def draw_digits(s,dg,dots,raw=()):
-    """Update only the digit/bar/LED segments that changed."""
+    """Update only the digit/bar/LED segments that changed. An active overlay (state key 'overlay') replaces whole digit groups,
+    and, if it has 'raw', replaces the bar graph/LED panel, until its 'until' time."""
     global cur_dig
+    ov=OV if (OV and time.time()<OV.get('until',0)) else None
+    if ov:
+        dg=dict(dg); dg.update(ov.get('digits',{}))
+        if 'dots' in ov: dots=dict(dots); dots.update(ov['dots'])
+        if 'raw' in ov: raw=ov['raw']
     new=set()
     for g,text in dg.items(): new|=digits.lit(int(g),str(text),dots.get(g,[]))
     new|={(int(r),int(j)) for r,j in raw}
-    if PHASE: new|={(int(r),int(j)) for r,j in RB}
-    if PHASE2: new|={(int(r),int(j)) for r,j in RS}
+    if not (ov and 'raw' in ov):
+        if PHASE: new|={(int(r),int(j)) for r,j in RB}
+        if PHASE2: new|={(int(r),int(j)) for r,j in RS}
     for r,j in new-cur_dig: cmd(s,'p %d %d'%(r,j))
     for r,j in cur_dig-new: cmd(s,'q %d %d'%(r,j))
     cur_dig=new
 def load():
-    global RB,RS,MSG,LREQ
+    global RB,RS,MSG,LREQ,OV
     try:
-        d=json.load(open(STATE)); RB=d.get('raw_blink',[]); RS=d.get('raw_slow',[]); MSG=d.get('message'); LREQ=int(d.get('L',30))
+        d=json.load(open(STATE)); RB=d.get('raw_blink',[]); RS=d.get('raw_slow',[]); MSG=d.get('message'); LREQ=int(d.get('L',30)); OV=d.get('overlay')
         return d.get('art',SMILE),d.get('color','y'),d.get('blink',EYES),d.get('digits',{}),d.get('dots',{}),d.get('raw',[])
     except Exception: return SMILE,'y',EYES,{},{},[]
 def append(path,obj):
@@ -89,6 +104,8 @@ while running:
         # buttons: a press = the same bit set in two consecutive polls; edges are logged, any press ends a message
         try: mask=int(cmd(s,'B')[-4:],16)
         except ValueError: mask=0
+        ova=bool(OV and time.time()<OV.get('until',0))
+        if ova!=OVACT: OVACT=ova; draw_digits(s,dg,dots,raw)       # overlay started or expired: redraw digits/LEDs
         stable=mask&prev_poll; prev_poll=mask
         newly=stable&~held; held=stable
         for r in range(11):
@@ -112,10 +129,11 @@ while running:
         elif time.time()>=nxt and blink:
             wink = random.random()<0.2 and len(blink)>=8
             cells = blink[:4] if wink else blink      # a wink closes only the first (left) eye
-            for x,y in cells: px(s,x,y,color,False)
+            for x,y in cells: px(s,x,y,'y',False)      # 'y' = switch both LEDs of the pixel off
             time.sleep(0.15)
             for x,y in cells:
-                if art[y][x]=='#': px(s,x,y,color,True)
+                c=pixcolor(art[y][x],color)
+                if c: px(s,x,y,c,True)
             nxt=time.time()+random.uniform(3,8)
         if RB and time.time()>=nph:
             PHASE=not PHASE; draw_digits(s,dg,dots,raw); nph=time.time()+0.35

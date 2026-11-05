@@ -37,9 +37,9 @@ scrolling messages that stay until a person presses a button.
 
 1. The original firmware was never overwritten blindly: the chip's flash was read first and kept as a backup
    (not included here: it is the manufacturer's code).
-2. The crystal was missing, so a 1 MHz clock is injected into the crystal pin from an ESP32 GPIO through a
-   resistor bias. The same ESP32 runs `esp32/ArduinoISP_esp32/` to program the chip over SPI, then
-   `esp32/uart_bridge/` to bridge the chip's UART to USB.
+2. The crystal was missing, so at first a 1 MHz clock was injected into the crystal pin from an ESP32 GPIO through a
+   resistor bias. Since 2026-11-04 the board runs from a real 13.824 MHz crystal (`docs/CRYSTAL_SWAP.md`). The same ESP32 runs
+   `esp32/ArduinoISP_esp32*/` to program the chip over SPI, then `esp32/uart_bridge*/` to bridge the chip's UART to USB.
 3. `firmware/display_cmd7/display_cmd7.c` is our own AVR firmware. It scans 16 rows (74HC154 decoder) across
    72 columns (3 x 24-bit 74ACT164 chains), and speaks a small ASCII protocol over UART (paint a pixel,
    paint the whole matrix with `Z`, read buttons with `B`, ...). The protocol is documented in the file header.
@@ -53,7 +53,8 @@ The full mapping (every row/column/segment/LED) and the debugging story are in `
 ## Quick start
 
 ```
-host/flash_chip.sh firmware/display_cmd7/display_cmd7.hex   # needs avrdude + arduino-cli + the ESP32 wired as in docs
+host/flash_chip_xtal.sh                                      # board with the 13.824 MHz crystal (current): flashes firmware/display_cmd12
+host/flash_chip.sh firmware/display_cmd7/display_cmd7.hex    # first version with the injected 1 MHz clock; both need avrdude + arduino-cli + the ESP32 wired as in docs
 python3 host/blinky.py                                       # owns /dev/ttyUSB0, draws the state file
 python3 examples/feed_example.py                             # writes a clock and CPU load onto the digits
 python3 host/say.py "HELLO" --ack
@@ -67,8 +68,9 @@ python3 host/say.py "HELLO" --ack
 
 ## Status
 
-Fully mapped except one LED (silkscreen LED 13, probably a serial activity light). Not yet done: button
-behaviors (cycling views, control actions), auto-start on boot, a real 11.0592 MHz crystal.
+Fully mapped except one LED (silkscreen LED 13, probably a serial activity light). A real crystal (13.824 MHz, from an old cordless
+phone) replaced the injected clock; flicker-free at 115200 baud (`docs/CRYSTAL_SWAP.md`). Not yet done: button behaviors (cycling views,
+control actions), a speaker/piezo, a one-line `systemd` unit. `examples/celebrate.py` is a small animation (a moving sine wave) at about 6 frames/s.
 
 ## Credits and license
 

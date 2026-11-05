@@ -10,7 +10,11 @@ theory it says so.
 - **3 x 74ACT164** chains (24 clocks each): data PA1/PA2/PA3, shared clock PA0. Data 0 = LED lit.
   Column index `j = 24*chain + k`, 72 columns; columns 64..71 light nothing.
 - **Buttons**: a key matrix read on a single input pin, PC5, with rows 0..10 selected by the row decoder (see below).
-- Serial: UART0 on the J11 header (9600-ish baud at the 1 MHz clock: UBRR 12 with U2X = 9615 baud).
+- Serial: UART0 on the J11 header (9615 baud at the injected 1 MHz clock: UBRR 12 with U2X; 115200 baud at the 13.824 MHz crystal: UBRR 14 with U2X).
+
+## Clock: a real crystal now (see `CRYSTAL_SWAP.md`); the injection below is the first version
+
+Since 2026-11-04 the board runs from a 13.824 MHz crystal on X1 (UART 115200 baud, firmware `firmware/display_cmd12`). The text below describes the injection that was used before, still valid if X1 is empty.
 
 ## Clock injection (no crystal)
 

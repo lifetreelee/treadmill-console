@@ -31,7 +31,7 @@ scrolling messages that stay until a person presses a button.
 - **6 seven-segment digit groups** (3+3+4+4+3+3 digits, with the odd decimal-point layout decoded)
 - **9-bar bar graph** and **12 round LEDs + a 4-LED square**, all individually addressable, with blink states
 - **11 buttons**, read back by the firmware and logged on the host; any press acknowledges a message
-- **A small picture catalog** (`examples/pictures.json`, 14 pictures with per-pixel colours, mostly portraits of the builder's cats; `python3 examples/show_picture.py NAME`)
+- **A small picture catalog** (`examples/pictures.json`, 16 pictures with per-pixel colours, mostly portraits of the builder's cats; `python3 examples/show_picture.py NAME`)
 - **Live data feed**: a state file (`display_state.json`) that any script can write; `host/blinky.py` renders it
 
 ## How it works (short version)

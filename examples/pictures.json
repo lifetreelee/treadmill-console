@@ -269,6 +269,42 @@
      2
     ]
    }
+  },
+  {
+   "name": "maggie",
+   "title": "Maggie",
+   "caption": "a tortoiseshell: dark mottled coat, an orange blaze, big yellow-green eyes, with two newborn kittens at the bottom corners",
+   "color": "y",
+   "art": [
+    "....R..........R....",
+    "....RR........RR....",
+    ".....RRRRYYRRRR.....",
+    ".....RGGRYYRGGR.....",
+    ".....RRRYYYYRRR.....",
+    "......RRYYYYRR......",
+    ".YY....RYYYYR....R..",
+    "YYY....RRRRRR...RRR."
+   ]
+  },
+  {
+   "name": "tiger-closeup",
+   "title": "Tiger, close-up",
+   "caption": "a long-haired calico: white blaze, a black patch around one eye, tan-brown mottling, green eyes",
+   "color": "y",
+   "art": [
+    "....R..........Y....",
+    "....RR........YY....",
+    ".....RRRRYYR........",
+    ".....RGGRYYYGG......",
+    ".....RYYYRRYYY......",
+    "......YYYYYYYY......",
+    ".....YYYYYYYYYY.....",
+    "....YYYYYYYYYYYY...."
+   ],
+   "digits": {
+    "1": "tiG",
+    "2": "Er"
+   }
   }
  ]
 }
